@@ -5,12 +5,12 @@ import Offers from "./pages/Offers";
 import Profile from "./pages/Profile";
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
+import Navbar from "./components/layout/Navbar";
 
 function App() {
   return (
     <>
       <Router>
-        {/* Todo Navbar */}
         <h1>My App</h1>
         <Routes>
           <Route exact path="/*" element={<Explore />} />
@@ -20,6 +20,7 @@ function App() {
           <Route exact path="/signup" element={<SignUp />} />
           <Route exact path="/forgotpassword" element={<ForgotPassword />} />
         </Routes>
+        <Navbar />
       </Router>
     </>
   );
