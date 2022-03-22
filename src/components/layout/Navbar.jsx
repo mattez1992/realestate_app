@@ -61,6 +61,22 @@ const Navbar = () => {
               Profile
             </p>
           </li>
+          <li className="navbarListItem" onClick={() => navigate("/signin")}>
+            <ProfileIcon
+              fill={matchRoute("/signin") ? "2c2c2c" : "#8f8f8f"}
+              width="36px"
+              height="36px"
+            />
+            <p
+              className={
+                matchRoute("/signin")
+                  ? "navbarListItemNameActive"
+                  : "navbarListItemName"
+              }
+            >
+              Sign in
+            </p>
+          </li>
         </ul>
       </nav>
     </footer>
