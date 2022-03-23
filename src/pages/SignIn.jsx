@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { ReactComponent as ArrowRightIcon } from "../assets/svg/keyboardArrowRightIcon.svg";
 import visibilityIcon from "../assets/svg/visibilityIcon.svg";
-
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { toast } from "react-toastify";
 const SignIn = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
@@ -13,19 +14,40 @@ const SignIn = () => {
   const navigate = useNavigate();
   const onChange = (e) =>
     setFormData({ ...formData, [e.target.id]: e.target.value });
+  const onSubmit = async (e) => {
+    e.preventDefault();
+    const auth = getAuth();
+    try {
+      const userCredentials = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      const user = userCredentials.user;
+      if (user) {
+        navigate("/profile");
+      } else {
+        toast.error("No user found");
+      }
+    } catch (error) {
+      toast.error("Bad User Credentials");
+      console.log(error);
+    }
+  };
   return (
     <>
       <div className="pageContainer">
         <header>
           <p className="pageHeader">Welcome Back</p>
         </header>
-        <form action="">
+        <form action="" onSubmit={onSubmit}>
           <input
             type="email"
             className="emailInput"
             placeholder="Email"
             value={email}
             id="email"
+            autoComplete="on"
             onChange={onChange}
           />
           <div className="passwordInputDiv">
@@ -35,6 +57,7 @@ const SignIn = () => {
               placeholder="Password"
               value={password}
               id="password"
+              autoComplete="on"
               onChange={onChange}
             />
             <img
